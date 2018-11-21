@@ -1,0 +1,12 @@
+{{ define "BestellingShow" }}
+  {{ template "Header" }}
+    {{ template "Menu"  }}
+    <h2> bestelling {{ .Bnr }} </h2>
+      <p>Status bestelling: {{ .Sts }}</p>
+      <p>Besteldatum: {{ .Bsd }}</p>
+      <p>Afbetaling-doorlooptijd: {{ .Dlt }}</p>
+      <p>Afbetaling-bestelbedrag: {{ .Bdr }}</p>
+      <p>Verkoper: {{ .Vkp }}</p>
+      <p>Klantnummer : {{ .Knr }}</p>
+  {{ template "Footer" }}
+{{ end }}

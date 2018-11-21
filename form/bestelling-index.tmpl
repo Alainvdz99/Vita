@@ -1,0 +1,32 @@
+{{ define "BestellingIndex" }}
+  {{ template "Header" }}
+    {{ template "Menu"  }}
+    <h2> Bestelling </h2>
+    <table border="1">
+      <thead>
+      <tr>
+        <td>Bestelnummer.</td>
+        <td>Status</td>
+        <td>Doorlooptijd</td>
+        <td>Afbetaling</td>
+        <td>Klantnummer</td>
+        <td>Bekijk</td>
+        <td>Verwijder</td>
+      </tr>
+       </thead>
+       <tbody>
+    {{ range . }}
+      <tr>
+        <td> {{ .Bnr }}</td>
+        <td> {{ .Sts }}</td>
+        <td> {{ .Dlt }}</td>
+        <td>{{ .Bdr }} </td>
+        <td>{{ .Knr }} </td>
+        <td><a href="/bestelling-show?bestelnummer={{ .Bnr }}">Bekijk</a></td>
+        <td><a href="/bestelling-delete?bestelnummer={{ .Bnr }}">Verwijder</a><td>
+      </tr>
+    {{ end }}
+       </tbody>
+    </table>
+  {{ template "Footer" }}
+{{ end }}

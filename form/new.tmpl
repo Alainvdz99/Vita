@@ -1,0 +1,28 @@
+{{ define "New" }}
+  {{ template "Header" }}
+    {{ template "Menu" }} 
+   <h2>Nieuwe klant</h2>  
+    <form method="POST" action="insert">
+	  <label> Klantnummer </label><input type="text" name="klantnummer" />,br />
+      <label> Voornaam </label><input type="text" name="voornaam" /><br />
+      <label> Achternaam </label><input type="text" name="naam" /><br />
+      <label> Postcode </label><input type="text" name="postcode" /><br />
+      <label> Huisnummer </label><input type="text" name="huisnummer" /><label> Toevoeging </label><input type="text" name="huisnummer_toevoeging" /><br />
+      <label> Geboortedatum (jjjj-mm-dd) </label><input type="text" name="geboortedatum" /><br />
+      <label> Geslacht (M/V/X) </label><input type="text" name="geslacht" value="{{ .Gsl }}"  /><br />
+      <label> Bloedgroep (A/B/AB/O) </label><input type="text" name="bloedgroep" /><label> Rhesusfactor (+/-) </label><input type="text" name="Rhesusfactor" /><br />
+      <label> Beroepsrisicofactor </label><input type="text" name="beroepsrisicofactor" /><br />
+      <label> Inkomen </label><input type="text" name="inkomen" /><br />
+      <label> Kredietregistratie (J/N) </label><input type="text" name="kredietregistratie" /><br />
+      <label> Opleiding </label><input type="text" name="opleiding" /><br />
+      <label> Opmerkingen </label><input type="text" name="opmerkingen" /><br />
+		<option value=""></option>
+		{{range .}}
+		<option value="{{.Knr }}" {{if eq .Selecterd .Knr}}selected="selected"{{end}}>{{.Knr}}</option>
+		{{end}}
+		</select>
+	<br />
+      <input type="submit" value="Opslaan" />
+    </form>
+  {{ template "Footer" }}
+{{ end }}

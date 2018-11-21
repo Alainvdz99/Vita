@@ -1,0 +1,26 @@
+{{ define "Modules" }}
+  {{ template "Header" }}
+    {{ template "Menu"  }}
+    <h2> Modules </h2>
+    <table border="1">
+      <thead>
+      <tr>
+        <td>Modulenaam.</td>
+        <td>Omschrijving</td>
+        <td>Stukprijs</td>
+        <td>Bekijk</td>
+      </tr>
+       </thead>
+       <tbody>
+    {{ range . }}
+      <tr>
+        <td> {{ .Mnm }}</td>
+        <td> {{ .Oms }}</td>
+        <td> {{ .Spr }}</td>
+        <td><a href="/bestelling-show?bestelnummer={{ .Bnr }}">Bekijk</a></td>
+      </tr>
+    {{ end }}
+       </tbody>
+    </table>
+  {{ template "Footer" }}
+{{ end }}

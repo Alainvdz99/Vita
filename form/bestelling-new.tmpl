@@ -1,0 +1,22 @@
+{{ define "BestellingNew" }}
+  {{ template "Header" }}
+    {{ template "Menu" }} 
+   <h2>Nieuwe bestelling</h2>
+    <form method="POST" action="insert">
+      <label> Bestelnummer </label><input type="text" name="bestelnummer" />,br />
+      <label> Status </label><input type="text" name="status" /><br />
+      <label> Besteldatum (jjjj-mm-dd) </label><input type="text" name="naam" /><br />
+      <label> Afbetaling-doorlooptijd </label><input type="text" name="afbetaling_doorlooptijd" /><br />
+      <label> Afbetaling-bestelbedrag </label><input type="text" name="afbetaling_bestelbedrag" /><br />
+      <label> Klantnummer </label><input type="text" name="klantnummer" /><br />
+      <label> Verkoper </label><input type="text" name="verkoper" /><br />
+		<option value=""></option>
+		{{range .}}
+		<option value="{{.Knr }}" {{if eq .Selecterd .Knr}}selected="selected"{{end}}>{{.Knr}}</option>
+		{{end}}
+		</select>
+	<br />
+      <input type="submit" value="Opslaan" />
+    </form>
+  {{ template "Footer" }}
+{{ end }}

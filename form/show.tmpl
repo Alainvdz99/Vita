@@ -1,0 +1,18 @@
+{{ define "Show" }}
+  {{ template "Header" }}
+    {{ template "Menu"  }}
+    <h2> Klant {{ .Knr }} </h2>
+      <p>Voornaam: {{ .Vnm }}</p>
+      <p>Achternaam: {{ .Nm }}</p>
+      <p>Postcode: {{ .Pc }}</p>
+      <p>Huisnummer: {{ .Hnr }} | Toevoeging: {{ .Hnrt }}</p>
+      <p>Geboortedatum (jjjj-mm-dd): {{ .Gbd }}</p>
+      <p>Geslacht (M/V/X): {{ .Gsl }}</p>
+      <p>Bloedgroep (A/B/AB/O): {{ .Blg }} | Rhesusfactor (+/-): {{ .Rhf }}</p>
+      <p>Beroepsrisicofactor: {{ .Brf }}</p>
+      <p>Inkomen: {{ .Ink }}</p>
+      <p>Kredietregistratie (J/N): {{ .Krg }}</p>
+      <p>Opleiding: {{ .Opl }}</p>
+      <p>Opmerkingen:  {{ .Opm }}</p><br /> <a href="/edit?klantnummer={{ .Knr }}">edit</a></p>
+  {{ template "Footer" }}
+{{ end }}

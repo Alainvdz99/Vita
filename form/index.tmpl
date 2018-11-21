@@ -1,0 +1,30 @@
+{{ define "Index" }}
+  {{ template "Header" }}
+    {{ template "Menu"  }}
+    <h2> Klanten </h2>
+    <table border="1">
+      <thead>
+      <tr>
+        <td>Nr.</td>
+        <td>Naam</td>
+        <td>Postcode/huisnummer</td>
+        <td>Geboortedatum</td>
+        <td>Bekijk</td>
+        <td>Verwijder</td>
+      </tr>
+       </thead>
+       <tbody>
+    {{ range . }}
+      <tr>
+        <td>{{ .Knr }}</td>
+        <td> {{ .Vnm }} {{ .Nm }} </td>
+        <td> {{ .Pc }} {{ .Hnr }}{{ .Hnrt }}</td>
+        <td>{{ .Gbd }} </td> 
+        <td><a href="/show?klantnummer={{ .Knr }}">Bekijk</a></td>
+        <td><a href="/delete?klantnummer={{ .Knr }}">Verwijder</a><td>
+      </tr>
+    {{ end }}
+       </tbody>
+    </table>
+  {{ template "Footer" }}
+{{ end }}

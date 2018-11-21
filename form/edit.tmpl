@@ -1,0 +1,23 @@
+{{ define "Edit" }}
+  {{ template "Header" }}
+    {{ template "Menu" }} 
+   <h2>Aanpassen klantgegevens</h2>  
+    <form method="POST" action="update">
+      <input type="hidden" name="uid" value="{{ .Knr }}"
+      <label> Klantnummer {{ .Knr }} </label><br />
+      <label> Voornaam </label><input type="text" name="voornaam" value="{{ .Vnm }}"  /><br />
+      <label> Achternaam </label><input type="text" name="naam" value="{{ .Nm }}"  /><br />
+      <label> Postcode </label><input type="text" name="postcode" value="{{ .Pc }}"  /><br />
+      <label> Huisnummer </label><input type="text" name="huisnummer" value="{{ .Hnr }}"  /><label> Toevoeging </label><input type="text" name="huisnummer_toevoeging" value="{{ .Hnrt }}"  /><br />
+      <label> Geboortedatum (jjjj-mm-dd) </label><input type="text" name="geboortedatum" value="{{ .Gbd }}"  /><br />
+      <label> Geslacht (M/V/X) </label><input type="text" name="geslacht" value="{{ .Gsl }}"  /><br />
+      <label> Bloedgroep (A/B/AB/O) </label><input type="text" name="bloedgroep" value="{{ .Blg }}"  /><label> Rhesusfactor (+/-) </label><input type="text" name="Rhesusfactor" value="{{ .Rhf }}"  /><br />
+      <label> Beroepsrisicofactor </label><input type="text" name="beroepsrisicofactor" value="{{ .Brf }}"  /><br />
+      <label> Inkomen </label><input type="text" name="inkomen" value="{{ .Ink }}"  /><br />
+      <label> Kredietregistratie (J/N) </label><input type="text" name="kredietregistratie" value="{{ .Krg }}"  /><br />
+      <label> Opleiding </label><input type="text" name="opleiding" value="{{ .Opl }}"  /><br />
+      <label> Opmerkingen </label><input type="text" name="opmerkingen" value="{{ .Opm }}"  /><br />
+      <input type="submit" value="Opslaan" />
+    </form><br />    
+  {{ template "Footer" }}
+{{ end }}
