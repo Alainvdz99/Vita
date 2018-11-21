@@ -12,14 +12,14 @@
       </tr>
        </thead>
        <tbody>
-    {{ range . }}
-      <tr>
-        <td> {{ .Mnm }}</td>
-        <td> {{ .Oms }}</td>
-        <td> {{ .Spr }}</td>
-        <td><a href="/bestelling-show?bestelnummer={{ .Bnr }}">Bekijk</a></td>
-      </tr>
-    {{ end }}
+        {{ range . }}
+          <tr>
+            <td> {{ .Mnm }}</td>
+            <td> {{ .Oms }}</td>
+            <td> {{ .Spr }}</td>
+            <!-- <td><a href="/bestelling-show?bestelnummer=null">Bekijk</a></td> -->
+          </tr>
+        {{ end }}
        </tbody>
     </table>
   {{ template "Footer" }}

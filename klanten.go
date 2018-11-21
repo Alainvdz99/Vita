@@ -14,10 +14,10 @@ import (
 
 // Gegevens van de klanten die getoond, ingevoerd, gewijzigd of verwijderd kunnen worden
 type Klant struct {
-	Knr, Hnr, Ink                    int
+	Knr, Hnr, Ink                    int64
 	Nm, Vnm, Pc, Hnrt, Gsl, Blg, Rhf string
 	Gbd, Krg, Opl, Opm               string
-	Brf                              float32
+	Brf                              float64
 }
 
 type Bestelling struct {
@@ -45,7 +45,7 @@ func dbConn() (db *sql.DB) {
 }
 
 // De routing die afgeleid wordt naar de template
-var tmpl = template.Must(template.ParseGlob("klanten/form/*"))
+var tmpl = template.Must(template.ParseGlob("form/*"))
 
 var cookieHandler = securecookie.New(
 	securecookie.GenerateRandomKey(64),
@@ -143,11 +143,9 @@ const internalPage = `<html><body>
 <hr>
 <p>Hallo: %s </p>
 <p>
-<a href="/show">Mijn klanten</a> |
-<a href="/index">Mijn bestellingen</a> |
-<a href="/">Klanten</a> |
-<a href="/">Bestellingen</a> |
-<a href="/">Modules</a>
+<a href="/index">Mijn klanten</a> |
+<a href="/bestelling-index">Mijn bestellingen</a> |
+<a href="/modules">Modules</a>
 </p>
 <form method="post" action="/logout">
     <button type="submit">Uitloggen</button>
@@ -181,29 +179,29 @@ func Index(w http.ResponseWriter, request *http.Request) {
 	klnt := Klant{}
 	res := []Klant{}
 	for selDB.Next() {
-		var klantnummer, huisnummer, inkomen int
-		var naam, voornaam, postcode, huisnummer_toevoeging, geslacht, bloedgroep, rhesusfactor string
-		var geboortedatum, kredietregistratie, opleiding, opmerkingen string
-		var beroepsrisicofactor float32
-		err = selDB.Scan(&klantnummer, &voornaam, &naam, &postcode, &huisnummer, &huisnummer_toevoeging, &geboortedatum, &geslacht, &bloedgroep, &rhesusfactor, &beroepsrisicofactor, &inkomen, &kredietregistratie, &opleiding, &opmerkingen)
+		var klantnummer, huisnummer, inkomen sql.NullInt64
+		var naam, voornaam, postcode, huisnummer_toevoeging, geslacht, bloedgroep, rhesusfactor sql.NullString
+		var geboortedatum, kredietregistratie, opleiding, opmerkingen sql.NullString
+		var beroepsrisicofactor sql.NullFloat64
+		err = selDB.Scan(&klantnummer, &naam, &voornaam, &postcode, &huisnummer, &huisnummer_toevoeging, &geboortedatum, &geslacht, &bloedgroep, &rhesusfactor, &beroepsrisicofactor, &inkomen, &kredietregistratie, &opleiding, &opmerkingen)
 		if err != nil {
 			panic(err.Error())
 		}
-		klnt.Knr = klantnummer
-		klnt.Nm = naam
-		klnt.Vnm = voornaam
-		klnt.Pc = postcode
-		klnt.Hnr = huisnummer
-		klnt.Hnrt = huisnummer_toevoeging
-		klnt.Gbd = geboortedatum
-		klnt.Gsl = geslacht
-		klnt.Blg = bloedgroep
-		klnt.Rhf = rhesusfactor
-		klnt.Brf = beroepsrisicofactor
-		klnt.Ink = inkomen
-		klnt.Krg = kredietregistratie
-		klnt.Opl = opleiding
-		klnt.Opm = opmerkingen
+		klnt.Knr = klantnummer.Int64
+		klnt.Nm = naam.String
+		klnt.Vnm = voornaam.String
+		klnt.Pc = postcode.String
+		klnt.Hnr = huisnummer.Int64
+		klnt.Hnrt = huisnummer_toevoeging.String
+		klnt.Gbd = geboortedatum.String
+		klnt.Gsl = geslacht.String
+		klnt.Blg = bloedgroep.String
+		klnt.Rhf = rhesusfactor.String
+		klnt.Brf = beroepsrisicofactor.Float64
+		klnt.Ink = inkomen.Int64
+		klnt.Krg = kredietregistratie.String
+		klnt.Opl = opleiding.String
+		klnt.Opm = opmerkingen.String
 		res = append(res, klnt)
 	}
 	//tmpl.ExecuteTemplate(w, "Index", nil)
@@ -221,29 +219,29 @@ func Show(w http.ResponseWriter, r *http.Request) {
 	}
 	klnt := Klant{}
 	for selDB.Next() {
-		var klantnummer, huisnummer, inkomen int
-		var naam, voornaam, postcode, huisnummer_toevoeging, geslacht, bloedgroep, rhesusfactor string
-		var geboortedatum, kredietregistratie, opleiding, opmerkingen string
-		var beroepsrisicofactor float32
-		err = selDB.Scan(&klantnummer, &voornaam, &naam, &postcode, &huisnummer, &huisnummer_toevoeging, &geboortedatum, &geslacht, &bloedgroep, &rhesusfactor, &beroepsrisicofactor, &inkomen, &kredietregistratie, &opleiding, &opmerkingen)
+		var klantnummer, huisnummer, inkomen sql.NullInt64
+		var naam, voornaam, postcode, huisnummer_toevoeging, geslacht, bloedgroep, rhesusfactor sql.NullString
+		var geboortedatum, kredietregistratie, opleiding, opmerkingen sql.NullString
+		var beroepsrisicofactor sql.NullFloat64
+		err = selDB.Scan(&klantnummer, &naam, &voornaam, &postcode, &huisnummer, &huisnummer_toevoeging, &geboortedatum, &geslacht, &bloedgroep, &rhesusfactor, &beroepsrisicofactor, &inkomen, &kredietregistratie, &opleiding, &opmerkingen)
 		if err != nil {
 			panic(err.Error())
 		}
-		klnt.Knr = klantnummer
-		klnt.Nm = naam
-		klnt.Vnm = voornaam
-		klnt.Pc = postcode
-		klnt.Hnr = huisnummer
-		klnt.Hnrt = huisnummer_toevoeging
-		klnt.Gbd = geboortedatum
-		klnt.Gsl = geslacht
-		klnt.Blg = bloedgroep
-		klnt.Rhf = rhesusfactor
-		klnt.Brf = beroepsrisicofactor
-		klnt.Ink = inkomen
-		klnt.Krg = kredietregistratie
-		klnt.Opl = opleiding
-		klnt.Opm = opmerkingen
+		klnt.Knr = klantnummer.Int64
+		klnt.Nm = naam.String
+		klnt.Vnm = voornaam.String
+		klnt.Pc = postcode.String
+		klnt.Hnr = huisnummer.Int64
+		klnt.Hnrt = huisnummer_toevoeging.String
+		klnt.Gbd = geboortedatum.String
+		klnt.Gsl = geslacht.String
+		klnt.Blg = bloedgroep.String
+		klnt.Rhf = rhesusfactor.String
+		klnt.Brf = beroepsrisicofactor.Float64
+		klnt.Ink = inkomen.Int64
+		klnt.Krg = kredietregistratie.String
+		klnt.Opl = opleiding.String
+		klnt.Opm = opmerkingen.String
 	}
 	tmpl.ExecuteTemplate(w, "Show", klnt)
 	defer db.Close()
@@ -316,7 +314,7 @@ func bestellingIndex(w http.ResponseWriter, request *http.Request) {
 		var bestelnummer, afbetaling_doorlooptijd, klantnummer, verkoper int
 		var status, besteldatum string
 		var afbetaling_bestelbedrag float32
-		err = selDB.Scan(&klantnummer, &bestelnummer, &afbetaling_doorlooptijd, &verkoper, &status, &besteldatum, &afbetaling_bestelbedrag,)
+		err = selDB.Scan(&bestelnummer, &status, &besteldatum, &afbetaling_doorlooptijd, &afbetaling_bestelbedrag, &klantnummer, &verkoper)
 		if err != nil {
 			panic(err.Error())
 		}
@@ -329,8 +327,7 @@ func bestellingIndex(w http.ResponseWriter, request *http.Request) {
 		bstl.Bdr = afbetaling_bestelbedrag
 		res = append(res, bstl)
 	}
-	tmpl.ExecuteTemplate(w, "BestellingIndex", nil)
-	//tmpl.ExecuteTemplate(w, "Index", res)
+	tmpl.ExecuteTemplate(w, "BestellingIndex", res)
 	defer db.Close()
 }
 
@@ -426,6 +423,7 @@ func Modules(w http.ResponseWriter, r *http.Request) {
 		mdl.Mnm = modulenaam
 		mdl.Oms = omschrijving
 		mdl.Spr = stukprijs
+
 		res = append(res, mdl)
 	}
 	tmpl.ExecuteTemplate(w, "Modules", res)
